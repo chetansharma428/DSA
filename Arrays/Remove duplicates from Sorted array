@@ -1,0 +1,25 @@
+int removeDuplicates(vector<int>& nums) {
+
+Both Approach has same O(n) t.c
+
+approach 1 :
+  // if(nums.size()==1) return 0;
+       //  int n = nums.size();
+       //  int temp = nums[1];
+       //  int i = 0;
+       //  for(int j=1; j<n; j++){
+       //      if(nums[j]!=temp){
+       //          temp = nums[j];
+       //          nums[i] = nums[j];
+       //          i++;
+       //      }
+       //  }
+       // return i;
+       
+  approach 2 :
+  
+   int k=1;
+	for(int i=1; i<nums.size(); i++)        
+		if(nums[i]!=nums[i-1]) nums[k++] = nums[i];     
+	return k;
+    }
