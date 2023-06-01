@@ -1,0 +1,71 @@
+Problem Description
+ 
+Given an array A containing N integers.
+You need to find the maximum sum of triplet ( Ai + Aj + Ak ) such that 0 <= i < j < k < N and Ai < Aj < Ak.
+If no such triplet exist return 0.
+
+Problem Constraints
+3 <= N <= 105.
+
+1 <= A[i] <= 108.
+
+Input Format
+First argument is an integer array A.
+Output Format
+Return a single integer denoting the maximum sum of triplet as described in the question.
+
+Example Input
+Input 1:
+
+ A = [2, 5, 3, 1, 4, 9]
+Input 2:
+
+ A = [1, 2, 3]
+
+Example Output
+Output 1:
+
+ 16
+Output 2:
+
+ 6
+
+Example Explanation
+Explanation 1:
+
+ All possible triplets are:-
+    2 3 4 => sum = 9
+    2 5 9 => sum = 16
+    2 3 9 => sum = 14
+    3 4 9 => sum = 16
+    1 4 9 => sum = 14
+  Maximum sum = 16
+Explanation 2:
+
+ All possible triplets are:-
+    1 2 3 => sum = 6
+ Maximum sum = 6
+ 
+ Approach 1 : we ll be using set data structure to find the tripplet
+ 
+  code : 
+    int Solution::solve(vector<int> &A) {
+        int n = A.size();
+        int sufix[n];
+        sufix[n-1] = A[n-1];
+        for(int i = n-2; i>=0; i--){
+            sufix[i] = max(sufix[i+1],A[i]);
+        }
+       set<int> s;
+       s.insert(A[0]);
+       int maxi = 0;
+       for(int i =1; i<n; i++){
+           s.insert(A[i]);
+           auto it = s.find(A[i]); // to find the previous element we ll point to the current element and --it
+           if(it!=s.begin() && sufix[i]!= A[i]) 
+           // if 'it' will point to first element then we ll not find prev of that element 
+           // && if sufix[i] == A[i] then we are already at max element then its triplet condition will not be there
+             maxi = max(maxi,(*--it) + sufix[i] + A[i]);
+       }
+        return maxi;
+}
