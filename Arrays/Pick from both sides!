@@ -1,0 +1,81 @@
+Problem Description
+Given an integer array A of size N.
+You have to pick exactly B elements from either left or right end of the array A to get the maximum sum.
+Find and return this maximum possible sum.
+
+NOTE: Suppose B = 4 and array A contains 10 elements then
+
+You can pick the first four elements or can pick the last four elements or can pick 1 from the front and 3 from the back etc.
+you need to return the maximum possible sum of elements you can pick.
+
+
+Problem Constraints
+1 <= N <= 105
+
+1 <= B <= N
+
+-103 <= A[i] <= 103
+
+
+
+Input Format
+First argument is an integer array A.
+
+Second argument is an integer B.
+Output Format
+Return an integer denoting the maximum possible sum of elements you picked.
+
+Example Input
+Input 1:
+
+ A = [5, -2, 3 , 1, 2]
+ B = 3
+Input 2:
+
+ A = [1, 2]
+ B = 1
+
+
+Example Output
+Output 1:
+
+ 8
+Output 2:
+
+ 2
+
+
+Example Explanation
+Explanation 1:
+
+ Pick element 5 from front and element (1, 2) from back so we get 5 + 1 + 2 = 8
+Explanation 2:
+
+ Pick element 2 from end as this is the maximum we can get.
+ 
+ 
+ Approach 1 : This question is implementation problem we have to think brute force way.
+               i.e: we have to find left side sum val, right side sum val and both side sum val and from all of them we have to return the maximum
+               
+       code: 
+int Solution::solve(vector<int> &A, int B) {
+            int n = A.size();
+             int left = 0;
+            int right = 0;
+            int ans = INT_MIN;
+            //left sum
+            for(int i=0; i<B; i++)
+              left+=A[i];
+            //right sum
+            for(int i=0; i<B; i++)
+              right+=A[n-i-1];
+
+            ans = max(left,right);
+            //both sides
+            for(int i=0; i<B; i++){
+              left-=A[B-i-1]; 
+              left+=A[n-i-1];
+             ans = max(ans,left);  // here we are taking the max from two i.e max(bothside,max(left,right))
+          }
+    return ans;
+}
