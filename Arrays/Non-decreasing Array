@@ -1,0 +1,42 @@
+Given an array nums with n integers, your task is to check if it could become non-decreasing by modifying at most one element.
+
+We define an array is non-decreasing if nums[i] <= nums[i + 1] holds for every i (0-based) such that (0 <= i <= n - 2).
+
+Example 1:
+
+Input: nums = [4,2,3]
+Output: true
+Explanation: You could modify the first 4 to 1 to get a non-decreasing array.
+Example 2:
+
+Input: nums = [4,2,1]
+Output: false
+Explanation: You cannot get a non-decreasing array by modifying at most one element.
+ 
+
+Constraints:
+
+n == nums.length
+1 <= n <= 104
+-105 <= nums[i] <= 105
+
+
+Approach : this looks simple but the tricky part is our answer depends on previous two elements and next two elements also so we have to consider them also and come with an approach.
+            i.e: there are 4 case which can be possible. i is the index where we are at present 
+            case 1 : when arr = 1,4,2,6 we have two option either increment 2 or decrement 2 
+            case 2 : when arr = 3,4,2,6 we have one option to increment 2 
+            case 3 : when arr = 1,5,3,4 we have one option to decrement 5
+            case 4 : when arr = 3,4,2,3 we cannot fix it by one change in this kind of case we return false i.e ( arr[i-2] > arr[i] && arr[i] > arr[i+1] ) return false
+                 
+
+code: 
+    bool checkPossibility(vector<int>& nums) {
+        int cnt = 0;
+        int n = nums.size();
+        for(int i=1; i<n; i++)
+            if(nums[i-1]>nums[i]){
+                if(cnt++ || (i>1 && i<n-1 && nums[i-2]>nums[i] && nums[i+1] < nums[i-1]) )
+                    return false;
+            }
+        return true;
+    }
