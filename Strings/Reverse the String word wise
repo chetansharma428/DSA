@@ -1,0 +1,67 @@
+Problem Description:
+
+You are given a string A of size N.
+Return the string A after reversing the string word by word.
+
+NOTE:
+
+A sequence of non-space characters constitutes a word.
+Your reversed string should not contain leading or trailing spaces, even if it is present in the input string.
+If there are multiple spaces between words, reduce them to a single space in the reversed string.
+ 
+Problem Constraints
+1 <= N <= 3 * 105
+
+Input Format
+The only argument given is string A.
+Output Format
+Return the string A after reversing the string word by word.
+
+Example Input
+Input 1:
+    A = "the sky is blue"
+Input 2:
+    A = "this is ib"
+
+Example Output
+Output 1:
+    "blue is sky the"
+Output 2:
+    "ib is this"
+
+Example Explanation
+Explanation 1:
+    We reverse the string word by word so the string becomes "the sky is blue".
+Explanation 2:
+    We reverse the string word by word so the string becomes "this is ib".
+    
+Approach : our main goal is to extract the words from the end of the string and push it to the answer string.
+          for that, what we ll do is start from the end of the list and ignore all trailing spaces and get the start and ending index of the word and make a
+          substring and push it to the answer and after pushing push a space to separate the words.
+          
+          T.C: O(N) (if we ignore the substr()) else O(N^2) because the substr() method at worst could take O(N) when the string contains a single word and it had
+                to traverse all the way  
+          S.C: O(1) ignoring the answer space.
+  
+  code: 
+    string Solution::solve(string A) {
+    int n = A.length();
+    string ans = "";
+    int i = n-1;
+    int j = i;
+    while(i>=0){
+        if(A[i]!=' '){
+            if(ans.length()>0)
+                ans.append(" ");
+            j=i;
+            while(A[i]!=' ' && i>=0){
+                i--;
+            }
+            string word = A.substr(i+1,j-i);
+            ans.append(word);
+        }
+        else 
+         i--;
+    }
+    return ans;
+} 
